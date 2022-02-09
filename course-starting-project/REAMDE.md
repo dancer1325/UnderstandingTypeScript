@@ -10,3 +10,7 @@
   * Serves the index.html on a server
   * Refresh the pages each time some change in the code is done
     * But if you change .ts, manually you need to compile again to generate the proper .js
+* Truthy and Falsy values
+  * Values which are considered boolean in a boolean context
+  * `node truthyorfalsy.js`
+    * Execute the .js
