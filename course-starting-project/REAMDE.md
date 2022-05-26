@@ -14,3 +14,14 @@
   * Values which are considered boolean in a boolean context
   * `node truthyorfalsy.js`
     * Execute the .js
+
+# How to run?
+* `npm install`
+  * Install all the dependencies
+* `npm start`
+  * Run the start script
+  * Start up the lite server
+    * 'localhost:3000'
+      * Output of the server
+    * 'localhost:3001'
+      * UI of the lite-server
