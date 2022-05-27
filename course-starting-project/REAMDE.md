@@ -25,3 +25,4 @@
       * Output of the server
     * 'localhost:3001'
       * UI of the lite-server
+  * Check the chrome debugger console
