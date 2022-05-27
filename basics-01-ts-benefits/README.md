@@ -13,6 +13,8 @@
 # How to run?
 * `npm install`
     * Install all the dependencies
+* `tsc app.ts`
+    * Compile .ts file to .js
 * `npm start`
     * Run the start script
     * Start up the lite server
