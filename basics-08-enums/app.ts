@@ -9,7 +9,7 @@ console.log(RoleNotInitialized.READ_ONLY.valueOf());
 enum RoleSomeInitialized { ADMIN  , READ_ONLY = 7 , AUTHOR , USER };
 console.log(RoleSomeInitialized.READ_ONLY.valueOf());
 
-// Entries' values can be different
+// Entries' values can be different type
 enum Role { ADMIN = 'ADMIN', READ_ONLY = 100, AUTHOR = 'AUTHOR' };
 
 const person = {
