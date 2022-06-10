@@ -8,6 +8,8 @@
     * `tsc --init`
       * Create a 'tsconfig.json'
       * From now, the project is a typescript project
+    * Create 'dist' folder
+      * folder which stores the output files
 * [lite-server](https://www.npmjs.com/package/lite-server)
     * Lightweight development only node server that serves a web app
     * Serves the index.html on a server
