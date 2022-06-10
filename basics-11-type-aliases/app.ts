@@ -54,7 +54,7 @@ function isOlder(user: User, checkAge: number) {
   return checkAge > user.age;
 }
 
-// Type alias can be defined which it's an union type
+// Type alias can be defidned which it's an union type
 type Person = { name: string } | string;
 let person1: Person = {name: 'Max'};
 // values can be switched between the union one's
