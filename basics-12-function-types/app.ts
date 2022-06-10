@@ -11,6 +11,7 @@ function addIndicatingReturnType(n1: number, n2: number): number {
 // void return type which doesn't exist in JS
 function printResult(num: number): void {
   console.log('printResult - Result: ' + num);
+  // return null;   // It's not necessary, but it's not wrong
 }
 
 // undefined return type
@@ -67,3 +68,14 @@ addAndHandle(10, 20, (result) => {
 // addAndHandle(10, 20, (result, b) => {
 //   console.log("addAndHandle - result " + result);
 // });
+
+// Questionnaire 3
+function sendRequest(data: string, cb: (response: any) => void) {
+  // ... sending a request with "data"
+  return cb({data: 'Hi there!'});
+  // Since cb is void --> It doesn't return anything, but it's not an error
+}
+sendRequest('Send this!', (response) => {
+  console.log("Questionnaire 3 - sendRequest - " + response);
+  return true; // Since cb is void --> It doesn't return anything, but it's not an error
+});
