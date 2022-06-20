@@ -117,31 +117,39 @@ function useVehicle(vehicle: Vehicle) {
 useVehicle(v1);
 useVehicle(v2);
 
-// interface Bird {
-//   type: 'bird';
-//   flyingSpeed: number;
-// }
+interface Bird {
+  type: 'bird';
+  flyingSpeed: number;
+}
 
-// interface Horse {
-//   type: 'horse';
-//   runningSpeed: number;
-// }
+interface Horse {
+  type: 'horse';
+  runningSpeed: number;
+}
 
-// type Animal = Bird | Horse;
+type Animal = Bird | Horse;
 
-// function moveAnimal(animal: Animal) {
-//   let speed;
-//   switch (animal.type) {
-//     case 'bird':
-//       speed = animal.flyingSpeed;
-//       break;
-//     case 'horse':
-//       speed = animal.runningSpeed;
-//   }
-//   console.log('Moving at speed: ' + speed);
-// }
+function moveAnimal(animal: Animal) {
+  let speed;
+  // Get the proper speed depending on the animal
+  // 1) Type guards
+  // if ('flyingSpeed' in animal) {
+  //   speed = animal.flyingSpeed;
+  // } else if ('runningSpeed' in animal) {
+  //   speed = animal.runningSpeed;
+  // }
+  // 2) extra property 'type' to filter in. Discriminated union
+  switch (animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    case 'horse':
+      speed = animal.runningSpeed;
+  }
+  console.log('Moving at speed: ' + speed);
+}
 
-// moveAnimal({type: 'bird', flyingSpeed: 10});
+moveAnimal({type: 'bird', flyingSpeed: 10});
 
 // // const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
 // const userInputElement = document.getElementById('user-input');
