@@ -1,16 +1,21 @@
 // Camel Case convention to declare classes
 abstract class Department {
   static fiscalYear = 2020;
-  // private readonly id: string;
-  // private name: string;
-  protected employees: string[] = [];
+  protected employees: string[] = [];   // Attribute of the class, but it's not part of the constructor's argument
 
   // constructor
   // 1) Reserved keyword. It works either JS (>= ES6) or TS
-  constructor(protected readonly id: string, public name: string) {
+  // 2) Ways to declare a constructor
+  // 2.1] Declaring the variables and passing to the constructor
+  // private readonly id: string;
+  // private name: string;
+  // constructor(id: string,  name: string) {
     // this.id = id;
     // this.name = n;
     // console.log(Department.fiscalYear);
+  // }
+  // 2.2] Adding the access modifier in front of the parameter to declare the parameter
+    constructor(protected readonly id: string, public name: string) {
   }
 
   static createEmployee(name: string) {
