@@ -51,7 +51,7 @@ const printOutput: (a: number | string) => void = output => console.log(output);
 
 // printOutput(add(5));
 
-const hobbies = ['Sports', 'Cooking'];
+const hobbies = ['Sports', 'Cooking', 'Flirting', 'Dance', 'Ride motorbike'];
 const activeHobbies = ['Hiking'];
 
 // Although it's a const, arrays are objects === reference values --> If we push, we change the memory, but not the address
@@ -92,10 +92,14 @@ const addRestParametersWithLimitedNumber = (...numbers: [number, number, number]
 // Here you need to specify the indicated # of arguments
 console.log("addRestParametersWithLimitedNumber " + addRestParametersWithLimitedNumber(2,3, 4));
 
+// Destructuring
+// 1) For array --> []. Guaranteed order for the extraction
 const [hobby1, hobby2, ...remainingHobbies] = hobbies;
 
-console.log(hobbies, hobby1, hobby2);
+console.log("hobbies: " + hobbies, " - hobby1: " + hobby1, " - hobby2: " + hobby2, " - remainingHobbies: " + remainingHobbies);
 
+// 2) For objects -->
+// extraction based on attributes' names. Attribute's name: variableToDeclare === alias
 const { firstName: userName, age } = person;
 
 console.log(userName, age, person);
