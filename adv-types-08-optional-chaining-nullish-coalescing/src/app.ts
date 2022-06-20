@@ -165,11 +165,12 @@ if (userInputElementWithoutForcingTheType) {
   (userInputElementWithoutForcingTheType as HTMLInputElement).value = 'Hi there!';
 }
 
-// interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character!' }
-//   [prop: string]: string;
-// }
+interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character!' }
+  [prop: string]: string;   // Array of properties with key and value as strings, but without knowing the property's names
+}
 
-// const errorBag: ErrorContainer = {
-//   email: 'Not a valid email!',
-//   username: 'Must start with a capital character!'
-// };
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email!',
+  username: 'Must start with a capital character!'
+};
+console.log("errorBag ", errorBag); // TODO: Why debugging it, it's an Object, instead of ErrorContainer?
