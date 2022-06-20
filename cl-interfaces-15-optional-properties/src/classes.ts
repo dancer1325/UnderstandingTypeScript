@@ -17,6 +17,7 @@ abstract class Department {
     return { name: name };
   }
 
+  // argument added to avoid errors in case you copy / reuse the function describe() outside this call
   abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
@@ -40,6 +41,7 @@ class ITDepartment extends Department {
 
   describe() {
     console.log('IT Department - ID: ' + this.id);
+    // this   points to the concrete ITDepartment instance created
   }
 }
 
@@ -100,6 +102,8 @@ console.log(employee1, Department.fiscalYear);
 
 // Object which it's an instance of a class
 const it = new ITDepartment('d1', ['Max']);
+const itObject = { describe: it.describe}; // Simple object, not ITDepartment one
+const itObjectWithId = { id: 'A', describe: it.describe}; // Simple object, not ITDepartment one, but adding id
 
 it.addEmployee('Max');
 it.addEmployee('Manu');
@@ -107,6 +111,8 @@ it.addEmployee('Manu');
 // it.employees[2] = 'Anna';
 
 it.describe();
+itObject.describe();        // id   undefined, because it's a simple object
+itObjectWithId.describe();  // id   it returns a value, because an object with id attribute has been added
 it.name = 'NEW NAME';
 it.printEmployeeInformation();
 
