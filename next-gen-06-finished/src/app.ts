@@ -70,14 +70,27 @@ const person = {
 const copiedPersonByPointer = person;   // Copy a pointer to the same reference in memory
 const copiedPerson = { ...person };     // {} creates a new object, pulling out all the key/value pairs
 
-const add = (...numbers: number[]) => {
+// Rest parameters
+// If you don't know the number of accepted parameters --> It's wrapped as array
+const addRestParameters = (...numbers: number[]) => {
   return numbers.reduce((curResult, curValue) => {
     return curResult + curValue;
-  }, 0);
+  }, 0);    // initial value
 };
 
-const addedNumbers = add(5, 10, 2, 3.7);
-console.log(addedNumbers);
+// You don't pass the arguments as an array, just individually
+const addedNumbers = addRestParameters(5, 10, 2, 3.7);
+console.log("addedNumbers " + addedNumbers);
+
+// If you know the # of parameters --> you can specify them
+const addRestParametersWithLimitedNumber = (...numbers: [number, number, number]) => {
+  return numbers.reduce((curResult, curValue) => {
+    return curResult + curValue;
+  }, 0);    // initial value
+};
+
+// Here you need to specify the indicated # of arguments
+console.log("addRestParametersWithLimitedNumber " + addRestParametersWithLimitedNumber(2,3, 4));
 
 const [hobby1, hobby2, ...remainingHobbies] = hobbies;
 
