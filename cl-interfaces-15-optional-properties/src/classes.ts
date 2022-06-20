@@ -59,6 +59,9 @@ class AccountingDepartment extends Department {
   private lastReport: string;
   private static instance: AccountingDepartment;
 
+  // getter method
+  // 1) Expose outside, private properties
+  // 2) get   Keyword
   get mostRecentReport() {
     if (this.lastReport) {
       return this.lastReport;
@@ -66,6 +69,9 @@ class AccountingDepartment extends Department {
     throw new Error('No report found.');
   }
 
+  // setter method
+  // 1) Expose outside, private properties
+  // 2) set keyword
   set mostRecentReport(value: string) {
     if (!value) {
       throw new Error('Please pass in a valid value!');
@@ -135,10 +141,9 @@ const accounting2 = AccountingDepartment.getInstance();
 
 console.log(accounting, accounting2);
 
-debugger;
-accounting.mostRecentReport = 'Year End Report';
+accounting.mostRecentReport = 'Year End Report';  // Access to the setter method, to pass the property
 accounting.addReport('Something went wrong...');
-console.log(accounting.mostRecentReport);
+console.log(accounting.mostRecentReport);   // Access to the getter method, as a property
 
 accounting.addEmployee('Max');
 accounting.addEmployee('Manu');
