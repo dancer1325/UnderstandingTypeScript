@@ -64,7 +64,7 @@ class ITDepartment extends Department {
 
 class AccountingDepartment extends Department {
   private lastReport: string;
-  private static instance: AccountingDepartment;
+  private static instance: AccountingDepartment;    // Variable to store if there is already an instance
 
   // getter method
   // 1) Expose outside, private properties
@@ -86,12 +86,15 @@ class AccountingDepartment extends Department {
     this.addReport(value);
   }
 
+  // private    The goal is in order to follow singleton pattern
   private constructor(id: string, private reports: string[]) {
     super(id, 'Accounting');
     this.lastReport = reports[0];
   }
 
+  // static     Since the constructor has been defined as private --> not possible to instantiate outside the class
   static getInstance() {
+    // If there is an existing instance --> return the existing one
     if (AccountingDepartment.instance) {
       return this.instance;
     }
@@ -147,6 +150,7 @@ it.printEmployeeInformation();
 
 console.log(it);
 
+// Not possible because it has been declared as singleton pattern, and the constructor as private
 // const accounting = new AccountingDepartment('d2', []);
 const accounting = AccountingDepartment.getInstance();
 const accounting2 = AccountingDepartment.getInstance();
