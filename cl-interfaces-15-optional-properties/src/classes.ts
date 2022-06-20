@@ -1,5 +1,6 @@
 // Camel Case convention to declare classes
 abstract class Department {
+  // Declare a static property
   static fiscalYear = 2020;
   protected employees: string[] = [];   // Attribute of the class, but it's not part of the constructor's argument
   // protected    To be accessible from extended classes
@@ -17,10 +18,13 @@ abstract class Department {
   // }
   // 2.2] Adding the access modifier in front of the parameter to declare the parameter
     constructor(protected readonly id: string, public name: string) {
+      // Not possible to access static properties in no static environment
+      //console.log(this.fiscalYear);
   }
 
   static createEmployee(name: string) {
-    return { name: name };
+      console.log(this.fiscalYear);   // Here you can access to static property, because you are in static environment
+      return { name: name };  // returns an object with a property
   }
 
   // argument added to avoid errors in case you copy / reuse the function describe() outside this call
@@ -114,8 +118,9 @@ class AccountingDepartment extends Department {
   }
 }
 
+// Create an object, not an instance of the class, based on static method
 const employee1 = Department.createEmployee('Max');
-console.log(employee1, Department.fiscalYear);
+console.log("Department.createEmployee ", employee1, Department.fiscalYear);  // Getting access to static variable
 
 // Object which it's an instance of a class
 const it = new ITDepartment('d1', ['Max']);
