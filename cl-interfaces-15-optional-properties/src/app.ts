@@ -18,6 +18,7 @@ interface Named {
   // modifiers in an interface
   // public name?: string;      // not allowed
   // private name?: string;     // not allowed
+  // declare properties as optional - ? -
   readonly name?: string;       // any object based on this interface, this property just established at the beginning
   outputName?: string;
 }
@@ -46,6 +47,7 @@ class Person implements Greetable {
   name?: string;
   age = 30;
 
+  // Possible to pass in method's arguments
   constructor(n?: string) {
     if (n) {
       this.name = n;
