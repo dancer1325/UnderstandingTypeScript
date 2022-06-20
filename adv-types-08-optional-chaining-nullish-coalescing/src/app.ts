@@ -44,6 +44,7 @@ function add(a: string, b: string): string;
 function add(a: string, b: number): string;
 function add(a: number, b: string): string;
 function add(a: Combinable, b: Combinable) {
+  // In union types, it's necessary type guard; which are if validations
   if (typeof a === 'string' || typeof b === 'string') {
     return a.toString() + b.toString();
   }
@@ -67,50 +68,54 @@ const storedData = userInput ?? 'DEFAULT';
 
 console.log(storedData);
 
-// type UnknownEmployee = Employee | Admin;
+type UnknownEmployee = Employee | Admin;
 
-// function printEmployeeInformation(emp: UnknownEmployee) {
-//   console.log('Name: ' + emp.name);
-//   if ('privileges' in emp) {
-//     console.log('Privileges: ' + emp.privileges);
-//   }
-//   if ('startDate' in emp) {
-//     console.log('Start Date: ' + emp.startDate);
-//   }
-// }
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log('Name: ' + emp.name);
+  if ('privileges' in emp) {      // Type guard, since the next property is just in case it's an Employee.  in  JS keyword
+    // if (typeof emp === 'Employee'){    // Another way to make the type guard
+    console.log('Privileges: ' + emp.privileges);
+  }
+  if ('startDate' in emp) {       // Type guard, since the next property is just in case it's an Admin.   in  JS keyword
+    // if (typeof emp === 'Admin') {      // Another way to make the type guard
+    console.log('Start Date: ' + emp.startDate);
+  }
+}
 
-// printEmployeeInformation({ name: 'Manu', startDate: new Date() });
+printEmployeeInformation(e1);
+printEmployeeInformation({ name: 'Manu', startDate: new Date() });
 
-// class Car {
-//   drive() {
-//     console.log('Driving...');
-//   }
-// }
+class Car {
+  drive() {
+    console.log('Driving...');
+  }
+}
 
-// class Truck {
-//   drive() {
-//     console.log('Driving a truck...');
-//   }
+class Truck {
+  drive() {
+    console.log('Driving a truck...');
+  }
 
-//   loadCargo(amount: number) {
-//     console.log('Loading cargo ...' + amount);
-//   }
-// }
+  loadCargo(amount: number) {
+    console.log('Loading cargo ...' + amount);
+  }
+}
 
-// type Vehicle = Car | Truck;
+type Vehicle = Car | Truck;   // For classes
 
-// const v1 = new Car();
-// const v2 = new Truck();
+const v1 = new Car();
+const v2 = new Truck();
 
-// function useVehicle(vehicle: Vehicle) {
-//   vehicle.drive();
-//   if (vehicle instanceof Truck) {
-//     vehicle.loadCargo(1000);
-//   }
-// }
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive();
+  if (vehicle instanceof Truck) {       // Type guard, since the next property is just in case it's an Admin.   instanceof  JS keyword
+    // if ('loadCargo' in vehicle) {    // Another way to make the type guard
+    vehicle.loadCargo(1000);
+  }
+}
 
-// useVehicle(v1);
-// useVehicle(v2);
+useVehicle(v1);
+useVehicle(v2);
 
 // interface Bird {
 //   type: 'bird';
