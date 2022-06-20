@@ -27,7 +27,9 @@ abstract class Department {
       return { name: name };  // returns an object with a property
   }
 
-  // argument added to avoid errors in case you copy / reuse the function describe() outside this call
+  // this: Department   argument added to avoid errors in case you copy / reuse the function describe() outside this call
+  // abstract            No implementation is added in the parent class, just in the children one's
+  // abstract describe(this: Department) {};    // No implementation === no body must appear
   abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
@@ -53,6 +55,7 @@ class ITDepartment extends Department {
     this.admins = admins;
   }
 
+  // Since the parent has got describe as abstract method --> Children need to implement it
   describe() {
     console.log('IT Department - ID: ' + this.id);
     // this   points to the concrete ITDepartment instance created
@@ -96,6 +99,7 @@ class AccountingDepartment extends Department {
     return this.instance;
   }
 
+  // Since the parent has got describe as abstract method --> Children need to implement it
   describe() {
     console.log('Accounting Department - ID: ' + this.id);
   }
@@ -121,6 +125,9 @@ class AccountingDepartment extends Department {
 // Create an object, not an instance of the class, based on static method
 const employee1 = Department.createEmployee('Max');
 console.log("Department.createEmployee ", employee1, Department.fiscalYear);  // Getting access to static variable
+
+// Impossible to instantiate an abstract class
+// new ITDepartment();
 
 // Object which it's an instance of a class
 const it = new ITDepartment('d1', ['Max']);
