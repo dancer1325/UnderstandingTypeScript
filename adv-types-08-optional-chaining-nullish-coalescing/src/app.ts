@@ -151,12 +151,19 @@ function moveAnimal(animal: Animal) {
 
 moveAnimal({type: 'bird', flyingSpeed: 10});
 
-// // const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
-// const userInputElement = document.getElementById('user-input');
+// Ways to casting
+// 1) <TypeToCast>
+// const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;   // !    Indicate to TS that it's managed by us, and it won't be never null
+const userInputElementWithoutForcingTheType = document.getElementById('user-input');   // TS isn't able to identify HTML element's type
 
-// if (userInputElement) {
-//   (userInputElement as HTMLInputElement).value = 'Hi there!';
+// if (userInputElementWithoutForcingTheType) {
+//   userInputElementWithoutForcingTheType.value = 'Hi there!';    // Invalid for HTMLElement
 // }
+
+// 2) as TypeToCast
+if (userInputElementWithoutForcingTheType) {
+  (userInputElementWithoutForcingTheType as HTMLInputElement).value = 'Hi there!';
+}
 
 // interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character!' }
 //   [prop: string]: string;
