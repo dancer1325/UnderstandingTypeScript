@@ -37,10 +37,14 @@ abstract class Department {
   }
 }
 
+// extends    Keyword to express inheritance
 class ITDepartment extends Department {
   admins: string[];
+
+  // if no additional property was added --> constructor wouldn't be necessary
   constructor(id: string, admins: string[]) {
-    super(id, 'IT');
+    // this.admins = admins;    // it throws an error. Parent constructor must be called previously
+    super(id, 'IT');  // Call to the parent constructor
     this.admins = admins;
   }
 
