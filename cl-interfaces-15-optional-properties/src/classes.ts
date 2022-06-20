@@ -2,6 +2,7 @@
 abstract class Department {
   static fiscalYear = 2020;
   protected employees: string[] = [];   // Attribute of the class, but it's not part of the constructor's argument
+  // protected    To be accessible from extended classes
 
   // constructor
   // 1) Reserved keyword. It works either JS (>= ES6) or TS
@@ -89,6 +90,7 @@ class AccountingDepartment extends Department {
     console.log('Accounting Department - ID: ' + this.id);
   }
 
+  // override the method  === Just 1! addEmployee method
   addEmployee(name: string) {
     if (name === 'Max') {
       return;
@@ -133,6 +135,7 @@ const accounting2 = AccountingDepartment.getInstance();
 
 console.log(accounting, accounting2);
 
+debugger;
 accounting.mostRecentReport = 'Year End Report';
 accounting.addReport('Something went wrong...');
 console.log(accounting.mostRecentReport);
