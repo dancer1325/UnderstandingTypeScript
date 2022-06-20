@@ -54,14 +54,21 @@ const printOutput: (a: number | string) => void = output => console.log(output);
 const hobbies = ['Sports', 'Cooking'];
 const activeHobbies = ['Hiking'];
 
+// Although it's a const, arrays are objects === reference values --> If we push, we change the memory, but not the address
+//activeHobbies.push(hobbies);                  // It just allows pushing single values per argument
+// activeHobbies.push(hobbies[0], hobbies[1]);   // It's valid but you should pass one by one
+// Spread Operator
+// 1) Pull all the elements in an array
 activeHobbies.push(...hobbies);
+const activeHobbiesTwo = ['Hiking', ...hobbies];
 
 const person = {
   firstName: 'Max',
   age: 30
 };
 
-const copiedPerson = { ...person };
+const copiedPersonByPointer = person;   // Copy a pointer to the same reference in memory
+const copiedPerson = { ...person };     // {} creates a new object, pulling out all the key/value pairs
 
 const add = (...numbers: number[]) => {
   return numbers.reduce((curResult, curValue) => {
