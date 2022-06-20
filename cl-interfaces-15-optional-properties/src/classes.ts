@@ -27,7 +27,7 @@ abstract class Department {
 
   addEmployee(employee: string) {
     // validation etc
-    // this.id = 'd2';
+    // this.id = 'd2';    // it throws an error, because it's readOnly
     this.employees.push(employee);
   }
 
