@@ -180,18 +180,29 @@ interface CourseGoal {
   completeUntil: Date;
 }
 
+// Partial<>
 function createCourseGoal(
   title: string,
   description: string,
   date: Date
 ): CourseGoal {
-  let courseGoal: Partial<CourseGoal> = {};
+  // Ways to create a CourseGoal
+  // 1) in 1! step
+  // return { title: title, description: description, completeUntil: date};
+  // 2) in several steps
+  // let courseGoal: CourseGoal = {};     // it throws an error if you initialize empty
+  let courseGoal: Partial<CourseGoal> = {};   // Since it's initialized empty === all properties are optionals
   courseGoal.title = title;
   courseGoal.description = description;
   courseGoal.completeUntil = date;
-  return courseGoal as CourseGoal;
+  return courseGoal as CourseGoal;    // Casting it, because you need to return the desired tpe
 }
 
+const fixedName = ['Alfredo', 'Belen'];
+fixedName.push('Carol');    // You can add more elements
+fixedName.pop();            // You can remove elements
+
+// Readonly<GenericType>
 const names: Readonly<string[]> = ['Max', 'Anna'];
-// names.push('Manu');
-// names.pop();
+// names.push('Manu');      // it throws an error, because you can't alter the number of elements
+// names.pop();             // it throws an error, because you can't alter the number of elements
