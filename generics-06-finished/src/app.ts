@@ -88,6 +88,7 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {   // [,]
 console.log("countAndDescribe " + countAndDescribe(['Sports', 'Cooking']));
 console.log(countAndDescribe(['Sports', 'Cooking']));
 
+// Generic function with constraint a key of another generic type
 function extractAndConvert<T extends object, U extends keyof T>(
   obj: T,
   key: U
@@ -95,7 +96,9 @@ function extractAndConvert<T extends object, U extends keyof T>(
   return 'Value: ' + obj[key];
 }
 
+// extractAndConvert({ name: 'Max' }, 12);      // it throws an error because keyof constraint isn't followed
 extractAndConvert({ name: 'Max' }, 'name');
+
 
 class DataStorage<T extends string | number | boolean> {
   private data: T[] = [];
