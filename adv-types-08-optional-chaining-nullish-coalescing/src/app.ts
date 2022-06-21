@@ -77,11 +77,17 @@ const fetchedUserData = {
 // console.log(fetchedUserData && fetchedUserData.job && fetchedUserData.job.title);
 console.log(fetchedUserData?.job?.title);
 
-const userInput = undefined;
-
-const storedData = userInput ?? 'DEFAULT';
-
-console.log(storedData);
+// Nullish coalescing ??
+// It also exists in JS
+function nullishCoallescingFunction(userInput: any) {
+  const storedData = userInput ?? 'DEFAULT';
+  console.log('nullishCoallescingFunction ' + storedData);
+}
+nullishCoallescingFunction(null);
+nullishCoallescingFunction(undefined);
+nullishCoallescingFunction('');
+nullishCoallescingFunction(' ');
+nullishCoallescingFunction(' Alfredo ');
 
 type UnknownEmployee = Employee | Admin;
 
