@@ -99,8 +99,55 @@ function extractAndConvert<T extends object, U extends keyof T>(
 // extractAndConvert({ name: 'Max' }, 12);      // it throws an error because keyof constraint isn't followed
 extractAndConvert({ name: 'Max' }, 'name');
 
+// Generic class
+class DataStorage<T> {
+  // Generic types added to attributes
+  private data: T[] = [];
 
-class DataStorage<T extends string | number | boolean> {
+  // Generic types added to methods
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1); // -1
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+const text = new DataStorage<string>();
+text.addItem('Max');
+// text.addItem(3);         // Since in the instance has been specified the type --> you can't change it
+text.addItem('Manu');
+text.removeItem('Max');
+console.log(text.getItems());
+const number = new DataStorage<number>();
+// number.addItem('Max');   // Since in the instance has been specified the type --> you can't change it
+number.addItem(3);
+number.addItem(10);
+number.removeItem(3);
+console.log(number.getItems());
+const objects = new DataStorage<object>();
+// object.addItem('Max');     // Since in the instance has been specified the type --> you can't change it
+// object.addItem(3);        // Since in the instance has been specified the type --> you can't change it
+objects.addItem({name: 'Alfredo'});
+objects.addItem({name: 'Belen'});
+console.log(objects.getItems());
+objects.removeItem({name: 'Alfredo'});      // It wouldn't remove the object, because JS works with reference types === different objects are
+console.log(objects.getItems());
+const objectCreated = {name: 'Noelia'};   // It would be removed if you pass the same reference
+objects.addItem(objectCreated);
+console.log(objects.getItems());
+objects.removeItem(objectCreated);    // Here we are passing the same reference
+console.log(objects.getItems());
+
+// Generic class with constraints of string, number or boolean
+class DataStorageWithConstraints<T extends string | number | boolean> {
   private data: T[] = [];
 
   addItem(item: T) {
@@ -119,21 +166,13 @@ class DataStorage<T extends string | number | boolean> {
   }
 }
 
-const textStorage = new DataStorage<string>();
+const textStorage = new DataStorageWithConstraints<string>();
 textStorage.addItem('Max');
 textStorage.addItem('Manu');
 textStorage.removeItem('Max');
 console.log(textStorage.getItems());
 
-const numberStorage = new DataStorage<number>();
-
-// const objStorage = new DataStorage<object>();
-// const maxObj = {name: 'Max'};
-// objStorage.addItem(maxObj);
-// objStorage.addItem({name: 'Manu'});
-// // ...
-// objStorage.removeItem(maxObj);
-// console.log(objStorage.getItems());
+const numberStorage = new DataStorageWithConstraints<number>();
 
 interface CourseGoal {
   title: string;
