@@ -74,7 +74,8 @@ interface Lengthy {
   length: number;
 }
 
-function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+// Generic function with constraint of extending from Lengthy
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {   // [,] tuple
   let descriptionText = 'Got no value.';
   if (element.length === 1) {
     descriptionText = 'Got 1 element.';
@@ -83,7 +84,8 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
   }
   return [element, descriptionText];
 }
-
+// console.log("countAndDescribe " + countAndDescribe(10));     // it doesn't follow the constraint --> it throws an error
+console.log("countAndDescribe " + countAndDescribe(['Sports', 'Cooking']));
 console.log(countAndDescribe(['Sports', 'Cooking']));
 
 function extractAndConvert<T extends object, U extends keyof T>(
