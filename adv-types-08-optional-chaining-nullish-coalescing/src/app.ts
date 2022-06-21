@@ -64,12 +64,17 @@ console.log("resultAddition ", resultAddition);
 const resultNumberAndString = add(2, 'Alfredo');
 console.log("resultNumberAndString ", resultNumberAndString);
 
+// Optional Chaining - ? -
+// Uses
+// 1) You don't know if the data could come
 const fetchedUserData = {
   id: 'u1',
   name: 'Max',
   job: { title: 'CEO', description: 'My own company' }
 };
 
+// JS workaround
+// console.log(fetchedUserData && fetchedUserData.job && fetchedUserData.job.title);
 console.log(fetchedUserData?.job?.title);
 
 const userInput = undefined;
