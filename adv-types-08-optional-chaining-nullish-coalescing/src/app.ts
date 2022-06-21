@@ -39,10 +39,12 @@ type Numeric = number | boolean;
 // Intersection of union types is also possible
 type Universal = Combinable & Numeric;
 
+// Function overload
 function add(a: number, b: number): number;
 function add(a: string, b: string): string;
 function add(a: string, b: number): string;
 function add(a: number, b: string): string;
+// Depending on the arguments' type, will be invoked the next one
 function add(a: Combinable, b: Combinable) {
   // In union types, it's necessary type guard; which are if validations
   if (typeof a === 'string' || typeof b === 'string') {
@@ -52,7 +54,15 @@ function add(a: Combinable, b: Combinable) {
 }
 
 const result = add('Max', ' Schwarz');
+// If there is just exist add(a: Combinable, b: Combinable), which returns a Combinable
+// --> to use .split method, you would need to cast
+// const result = add('Max', ' Schwarz') as string;
 result.split(' ');
+console.log("result split ", result);
+const resultAddition = add(2, 3);
+console.log("resultAddition ", resultAddition);
+const resultNumberAndString = add(2, 'Alfredo');
+console.log("resultNumberAndString ", resultNumberAndString);
 
 const fetchedUserData = {
   id: 'u1',
