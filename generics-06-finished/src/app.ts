@@ -22,6 +22,36 @@ const arrayWithArrowBrackets: Array<any> = [];
 //   // data.split(' ');      // TS throws an error because the promise returns a number in the type related to the generic one
 // })
 
+function mergeObjects(objA: Object, objB: Object) {
+  return Object.assign(objA, objB);   // Merge objects with their properties in a new object
+}
+const mergedObjects = mergeObjects({name:'Alfredo'}, {age:30});
+// mergedObjects.name     // TS throws an error because it doesn't know about the object and their properties
+// You could access to the attributes if you would cast
+const mergedObjectsCasting = mergeObjects({name:'Alfredo'}, {age:30}) as {name: string, age: number};
+console.log("mergedObjectsCasting.name " + mergedObjectsCasting.name);
+console.log('mergeObjects ' + mergedObjects);   // Concatenating with a string, just return [object Object]
+console.log(mergedObjects);
+
+// Generic function
+// TS can infer the type to return
+function mergeWithGeneric<T, U>(objA: T, objB: U) {
+  // You are indicating the specific type, not objects
+  return Object.assign(objA, objB);
+}
+const mergedObjectWithGenericFunction = mergeWithGeneric({name:'Alfredo'}, {age:30});
+// You can access to the properties
+console.log("mergedObjectWithGenericFunction.name " + mergedObjectWithGenericFunction.name);
+console.log("mergedObjectWithGenericFunction " + mergedObjectWithGenericFunction);
+console.log(mergedObjectWithGenericFunction);
+// Anytime, you can set any type dynamically, that you want
+const mergedObjectWithGenericFunctionViaAnotherTypes = mergeWithGeneric({height:180}, {status:'single'});
+console.log("mergedObjectWithGenericFunctionViaAnotherTypes.status " + mergedObjectWithGenericFunctionViaAnotherTypes.status);
+// You can specify the generic types invoking it, instead of being inferred by TS
+const mergedObjectWithGenericFunctionSpecifyingTpe = mergeWithGeneric<{property: string}, {skill: string}>({property:'Home'}, {skill:'flirt'});
+console.log("mergedObjectWithGenericFunctionSpecifyingTpe.skill " + mergedObjectWithGenericFunctionSpecifyingTpe.skill);
+
+
 function merge<T extends object, U extends object>(objA: T, objB: U) {
   return Object.assign(objA, objB);
 }
