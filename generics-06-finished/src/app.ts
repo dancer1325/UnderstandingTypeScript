@@ -50,14 +50,25 @@ console.log("mergedObjectWithGenericFunctionViaAnotherTypes.status " + mergedObj
 // You can specify the generic types invoking it, instead of being inferred by TS
 const mergedObjectWithGenericFunctionSpecifyingTpe = mergeWithGeneric<{property: string}, {skill: string}>({property:'Home'}, {skill:'flirt'});
 console.log("mergedObjectWithGenericFunctionSpecifyingTpe.skill " + mergedObjectWithGenericFunctionSpecifyingTpe.skill);
+// If one of types is a primitive one --> it won't properly merged as another property
+const mergedObjectWithGenericFunctionWithBasicType = mergeWithGeneric({property:'Home'}, 30);
+console.log("mergedObjectWithGenericFunctionWithBasicType " + mergedObjectWithGenericFunctionWithBasicType);
+console.log(mergedObjectWithGenericFunctionWithBasicType);
 
-
+// Add constraint to the types of a generic function
 function merge<T extends object, U extends object>(objA: T, objB: U) {
   return Object.assign(objA, objB);
 }
-
+// It throws an error, because the types must be objects
+// const mergedObjectWithConstraint = merge({property:'Home'}, 30);
 const mergedObj = merge({ name: 'Max', hobbies: ['Sports'] }, { age: 30 });
 console.log(mergedObj);
+// Constraint can be added to just one of the generic types
+function mergeWithOneConstraint<T extends object, U>(objA: T, objB: U) {
+  return Object.assign(objA, objB);
+}
+const mergedObjWithJustOneConstraint = mergeWithOneConstraint({ name: 'Max', hobbies: ['Sports'] }, 30 );
+console.log(mergedObjWithJustOneConstraint);
 
 interface Lengthy {
   length: number;
