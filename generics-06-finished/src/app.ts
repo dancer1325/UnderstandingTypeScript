@@ -174,6 +174,35 @@ console.log(textStorage.getItems());
 
 const numberStorage = new DataStorageWithConstraints<number>();
 
+// Union types, to compare vs generic types
+class DataStorageWithUnionTypes {
+  private data: (string | number | boolean)[] = [];     // Union type represents here that the elements can be of any of those types
+
+  // Union type represents here that the elements can be of any of those types
+  addItem(item: string | number | boolean) {
+    this.data.push(item);
+  }
+
+  // Union type represents here that the elements can be of any of those types
+  removeItem(item: string | number | boolean) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1); // -1
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const dataStorageWithUnionTypes = new DataStorageWithUnionTypes();
+dataStorageWithUnionTypes.addItem('Alfredo');
+dataStorageWithUnionTypes.addItem(4);             // Here you can see that we can add item from any of those types
+dataStorageWithUnionTypes.addItem(false);         // Here you can see that we can add item from any of those types
+dataStorageWithUnionTypes.removeItem(4);
+console.log(dataStorageWithUnionTypes.getItems());
+
 interface CourseGoal {
   title: string;
   description: string;
