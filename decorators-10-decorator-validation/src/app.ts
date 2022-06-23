@@ -12,9 +12,15 @@ class FirstPerson{
 // Without instantiating any class, decorator is invoked, because it's executed when the class
 // marked with the decorator is defined
 
+// Decorator Factory
+// Be able to configure the decorator
+// Accepting other arguments, to pass to the real function - decorator
 function Logger(logString: string) {
   console.log('LOGGER FACTORY');
+  // returning a function --> it's configurable
   return function(constructor: Function) {
+    // You can see here that it's configurable, because you are passing as
+    // decorator's argument
     console.log(logString);
     console.log(constructor);
   };
