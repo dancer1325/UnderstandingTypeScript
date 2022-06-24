@@ -48,6 +48,7 @@ function WithTemplate(template: string, hookId: string) {
 }
 
 // Several decorators can be added
+// TODO: Check that the order execution of the decorators is from bottom to top
 // @Logger('LOGGING - PERSON')
 @Logger('LOGGING')
 @WithTemplate('<h1>[WithTemplate] My Person Object</h1>', 'app')
@@ -104,6 +105,7 @@ class PersonWithSecondTemplate {
     console.log('Creating person object...');
   }
 }
+const personWithSecondTemplate = new PersonWithSecondTemplate();
 
 // ---
 
