@@ -255,37 +255,46 @@ const button = document.querySelector('button')!; // ! Indicate to TS, that we h
 button.addEventListener('click', p.showMessage);
 
 // ---
+// Validation decorators
 
 interface ValidatorConfig {
-  [property: string]: {
-    [validatableProp: string]: string[]; // ['required', 'positive']
+  [property: string]: { // Array of properties
+    [validatableProp: string]: string[]; // ['required', 'positive']    // Each property has got an array of validatableProp. And each validatableProp, with an array of strings
   };
 }
 
 const registeredValidators: ValidatorConfig = {};
 
+// Property decorator
 function Required(target: any, propName: string) {
+  console.log(target.constructor.name);
   registeredValidators[target.constructor.name] = {
     ...registeredValidators[target.constructor.name],
-    [propName]: ['required']
+    [propName]: ['required']  // Just to register this one
   };
 }
 
+// Property decorator
 function PositiveNumber(target: any, propName: string) {
   registeredValidators[target.constructor.name] = {
     ...registeredValidators[target.constructor.name],
-    [propName]: ['positive']
+    [propName]: ['positive'] // Just to register this one
   };
 }
 
 function validate(obj: any) {
-  const objValidatorConfig = registeredValidators[obj.constructor.name];
+  const objValidatorConfig = registeredValidators[obj.constructor.name];  // Get access to the stablished validators
+  console.log(objValidatorConfig);
   if (!objValidatorConfig) {
     return true;
   }
+  // loop   It's based on ValidatorConfig interface created
   let isValid = true;
   for (const prop in objValidatorConfig) {
+    console.log(prop);
     for (const validator of objValidatorConfig[prop]) {
+      console.log(validator);
+      console.log(obj[prop]);
       switch (validator) {
         case 'required':
           isValid = isValid && !!obj[prop];
@@ -313,12 +322,15 @@ class Course {
 
 const courseForm = document.querySelector('form')!;
 courseForm.addEventListener('submit', event => {
-  event.preventDefault();
+  event.preventDefault(); // Don't submit the form, and not send HTTP request
+  // Type casting, because we know the type of the elements
   const titleEl = document.getElementById('title') as HTMLInputElement;
   const priceEl = document.getElementById('price') as HTMLInputElement;
 
   const title = titleEl.value;
   const price = +priceEl.value;
+
+  // Validations could be done here manually
 
   const createdCourse = new Course(title, price);
 
