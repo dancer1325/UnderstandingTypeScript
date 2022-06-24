@@ -269,7 +269,7 @@ const registeredValidators: ValidatorConfig = {};
 function Required(target: any, propName: string) {
   console.log(target.constructor.name);
   registeredValidators[target.constructor.name] = {
-    ...registeredValidators[target.constructor.name],
+    ...registeredValidators[target.constructor.name],   // Avoid overriding the existing ones
     [propName]: ['required']  // Just to register this one
   };
 }
@@ -277,7 +277,7 @@ function Required(target: any, propName: string) {
 // Property decorator
 function PositiveNumber(target: any, propName: string) {
   registeredValidators[target.constructor.name] = {
-    ...registeredValidators[target.constructor.name],
+    ...registeredValidators[target.constructor.name],   // Avoid overriding the existing ones
     [propName]: ['positive'] // Just to register this one
   };
 }
