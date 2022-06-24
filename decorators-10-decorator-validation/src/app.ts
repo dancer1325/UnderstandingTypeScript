@@ -129,13 +129,21 @@ function Log(target: any, propertyName: string | Symbol) {
 // Valid for accessor methods (getters / setters)
 // target: 1) if static member --> constructor function of the class, or 2) if instance member --> prototype of the class
 // propertyName: string or Symbol. Whatever we use to define the property
-// descriptor: Descriptor of the property
+// descriptor: Descriptor of the property. It already appears on JS https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
   console.log('Accessor decorator!');
   console.log(target);
   console.log(name);
   console.log(descriptor);
 }
+// Same, but returning the propertyDescriptor
+// function Log2ReturningPropertyDescriptor(target: any, name: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+//   console.log('Accessor decorator!');
+//   console.log(target);
+//   console.log(name);
+//   console.log(descriptor);
+//   return { enumerable: false, configurable: true};
+// }
 
 // Method Decorator
 // target: 1) if static member --> constructor function of the class, or 2) if instance member --> prototype of the class
