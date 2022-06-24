@@ -197,17 +197,42 @@ class Product {
     return this._price * (1 + tax);
   }
 }
+
+class PrinterWithoutAutoBind {
+  message = 'This works!';
+
+  showMessage() {
+    console.log(this.message);    // It will return 'undefined', because 'this' is eventlistener's target
+  }
+}
+
+const printerWithoutAutoBind = new PrinterWithoutAutoBind();
+printerWithoutAutoBind.showMessage();
+
+const firstButton = document.querySelector('button')!; // ! Indicate to TS, that we handle possible erros
+firstButton.addEventListener('click', printerWithoutAutoBind.showMessage);
+
+// Binding to the proper instance
+const secondButton = document.querySelector('button')!;
+secondButton.addEventListener('click', printerWithoutAutoBind.showMessage.bind(printerWithoutAutoBind));  // Pure JS
+
 // Any decorator is executed when the class is declared, not when you declare instances
 const p1 = new Product('Book', 19);
 const p2 = new Product('Book 2', 29);
 
+// Class' method decorator
+// We want to set 'this' --> object which owns the method invoked
 function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
-  const originalMethod = descriptor.value;
+  const originalMethod = descriptor.value;    // .value   It always points to the function invoked
+  console.log("Autobind " + originalMethod);
   const adjDescriptor: PropertyDescriptor = {
+    // All attributes which can be added to a PropertyDescriptor
     configurable: true,
     enumerable: false,
+    // Extra logic each time the user tries to access to this property
     get() {
       const boundFn = originalMethod.bind(this);
+      // this   All which is responsible to trigger this get() method === concrete object which it belongs to
       return boundFn;
     }
   };
@@ -226,7 +251,7 @@ class Printer {
 const p = new Printer();
 p.showMessage();
 
-const button = document.querySelector('button')!;
+const button = document.querySelector('button')!; // ! Indicate to TS, that we handle possible erros
 button.addEventListener('click', p.showMessage);
 
 // ---
