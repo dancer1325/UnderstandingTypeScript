@@ -30,12 +30,18 @@ function Logger(logString: string) {
 // hookId  Some place in the HTML
 function WithTemplate(template: string, hookId: string) {
   console.log('WithTemplate FACTORY');
+  // Generic to indicate that it's a constructor, which at least generate an object with property 'name'
   return function<T extends { new (...args: any[]): { name: string } }>(
       originalConstructor: T
   ) {
+    // function which it's the decorator can return things, depending on type of decorator
+    // You can return a new constructor function, but extending from the original one
     return class extends originalConstructor {
-      constructor(..._: any[]) {
-        super();
+      // constructor(...args: any[]) {    // Indicate that it's the same as the arguments passed
+      constructor(..._: any[]) {          // _ Because the arguments aren't used
+        // This logics is just executed when an object is instantiated
+        super();  // originalConstructor one
+        //Next logic was placed previously outside this return class
         console.log('Rendering template');
         const hookEl = document.getElementById(hookId);
         if (hookEl) {
