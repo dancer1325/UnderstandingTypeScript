@@ -2,7 +2,7 @@
 // CamelCase pattern for naming
 function FirstLogger(constructor: Function) {
   console.log('Logging ...');
-  console.log(constructor);
+  console.log(constructor);   // All the class is logged, not just the constructor
 }
 
 @FirstLogger
@@ -26,10 +26,12 @@ function Logger(logString: string) {
   };
 }
 
+// Another decorator function
+// hookId  Some place in the HTML
 function WithTemplate(template: string, hookId: string) {
-  console.log('TEMPLATE FACTORY');
+  console.log('WithTemplate FACTORY');
   return function<T extends { new (...args: any[]): { name: string } }>(
-    originalConstructor: T
+      originalConstructor: T
   ) {
     return class extends originalConstructor {
       constructor(..._: any[]) {
@@ -45,20 +47,63 @@ function WithTemplate(template: string, hookId: string) {
   };
 }
 
+// Several decorators can be added
 // @Logger('LOGGING - PERSON')
 @Logger('LOGGING')
-@WithTemplate('<h1>My Person Object</h1>', 'app')
+@WithTemplate('<h1>[WithTemplate] My Person Object</h1>', 'app')
 class Person {
-  name = 'Max';
+  name = 'Alfredo';
 
   constructor() {
     console.log('Creating person object...');
   }
 }
 
-const pers = new Person();
-
+const pers = new Person();  // We instantiate an object, but decorator isn' invoked in this moment
 console.log(pers);
+
+// Another decorator factory
+function WithFirstTemplate(template: string, hookId: string) {
+  console.log('WithFirstTemplate FACTORY');
+  return function( _: Function  ) {   // _  not used. But it's necessary to indicate the argument
+    const hookEl = document.getElementById(hookId);
+    if (hookEl) {
+      hookEl.innerHTML = template;
+    }
+  };
+}
+
+@WithFirstTemplate('<h2>[WithFirstTemplate] My Person Object</h2>', 'app2')
+class PersonWithFirstTemplate {
+  name = 'Alfredo2';
+
+  constructor() {
+    console.log('Creating person object...');
+  }
+}
+
+// Another decorator factory
+// Replace the content of the template
+function WithSecondTemplate(template: string, hookId: string) {
+  console.log('WithSecondTemplate FACTORY');
+  return function( constructor: any  ) {   // any   Consider that it's a normal function, to use a constructor
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h3')!.textContent = p.name; // Replace the content of the template
+    }
+  };
+}
+
+@WithSecondTemplate('<h3>[WithSecondTemplate] My Person Object</h3>', 'app3')
+class PersonWithSecondTemplate {
+  name = 'Alfredo3';
+
+  constructor() {
+    console.log('Creating person object...');
+  }
+}
 
 // ---
 
