@@ -119,6 +119,11 @@ function Log(target: any, propertyName: string | Symbol) {
   console.log(target, propertyName);
 }
 
+// Accessor Decorators
+// Valid for accessor methods (getters / setters)
+// target: 1) if static member --> constructor function of the class, or 2) if instance member --> prototype of the class
+// propertyName: string or Symbol. Whatever we use to define the property
+// descriptor: Descriptor of the property
 function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
   console.log('Accessor decorator!');
   console.log(target);
@@ -126,6 +131,10 @@ function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
   console.log(descriptor);
 }
 
+// Method Decorator
+// target: 1) if static member --> constructor function of the class, or 2) if instance member --> prototype of the class
+// name: Method's name
+// descriptor: Descriptor of the method
 function Log3(
   target: any,
   name: string | Symbol,
@@ -137,6 +146,10 @@ function Log3(
   console.log(descriptor);
 }
 
+// Parameter Decorator
+// target: 1) if static member --> constructor function of the class, or 2) if instance member --> prototype of the class
+// name: Method or constructor to which one the parameter is applied to
+// position: Ordinal index of the parameter in the function's parameter list
 function Log4(target: any, name: string | Symbol, position: number) {
   console.log('Parameter decorator!');
   console.log(target);
@@ -149,6 +162,7 @@ class Product {
   title: string;
   private _price: number;
 
+  // setter method := Accessor method
   @Log2
   set price(val: number) {
     if (val > 0) {
@@ -163,9 +177,9 @@ class Product {
     this._price = p;
   }
 
-  // getter method because the property is private
+  // Class' method
   @Log3
-  getPriceWithTax(@Log4 tax: number) {
+  getPriceWithTax(@Log4 tax: number) {  // Parameter decorator suh as class' method's argument
     return this._price * (1 + tax);
   }
 }
