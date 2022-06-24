@@ -183,7 +183,7 @@ class Product {
     return this._price * (1 + tax);
   }
 }
-
+// Any decorator is executed when the class is declared, not when you declare instances
 const p1 = new Product('Book', 19);
 const p2 = new Product('Book 2', 29);
 
