@@ -109,6 +109,11 @@ const personWithSecondTemplate = new PersonWithSecondTemplate();
 
 // ---
 
+// Property Decorators
+// They have got specific arguments
+// target: 1) if static member --> constructor function of the class, or 2) if instance member --> prototype of the class
+// propertyName: string or Symbol. Whatever we use to define the property
+// Invoked, when the class with these decorators is declared
 function Log(target: any, propertyName: string | Symbol) {
   console.log('Property decorator!');
   console.log(target, propertyName);
@@ -158,6 +163,7 @@ class Product {
     this._price = p;
   }
 
+  // getter method because the property is private
   @Log3
   getPriceWithTax(@Log4 tax: number) {
     return this._price * (1 + tax);
