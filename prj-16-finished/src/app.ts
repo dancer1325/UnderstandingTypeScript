@@ -1,3 +1,5 @@
+// It can be built of multiple ways, but we will follow an OOP
+
 // Drag & Drop Interfaces
 interface Draggable {
   dragStartHandler(event: DragEvent): void;
