@@ -3,7 +3,7 @@
   * You can
     * add elements
     * drag & drop elements
-  * :warning: It's just the second chapter of the section, not all is included
+  * :warning: It's just the third chapter of the section, not all is included
 
 # Note
 * Steps to create / build the project
