@@ -1,15 +1,35 @@
-// Project State Management. Each time that the customer adds a new project --> Add to the list
-// Follow OOP to address the project. Similar approach as: Angular, React or Redux
-// 1) Global state management object
-// 2) listens to changes
-class ProjectState {
-  // Set up the listeners that we want, to listen each time a new project is added
-  private listeners: any[] = [];
-  private projects: any[] = [];
-  private static instance: ProjectState;    // Variable to store if there is already an instance
+// Project Type
+// enum   Check 'basics-08-enums'
+enum ProjectStatus {
+  Active,
+  Finished
+}
 
-  // Follow singleton pattern --> 1) constructor as private, 2) create static method, to retrieve the instances
+// Create a class, because we want to instantiate it
+class Project {
+
+  // Create a constructor adding the access modifier of the parameter.
   // Check 'cl-interfaces-15-optional-properties' module
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus
+    // Alternative using Union Type
+  // public status: 'Active' | 'Finished'
+  ) {}
+}
+
+// Project State Management
+// Type to encode a function
+type Listener = (items: Project[]) => void;
+
+class ProjectState {
+  private listeners: Listener[] = [];
+  private projects: Project[] = [];     // Declare with the new  / class
+  private static instance: ProjectState;
+
   private constructor() {}
 
   static getInstance() {
@@ -20,26 +40,26 @@ class ProjectState {
     return this.instance;
   }
 
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
-  // Arguments.   The one's required in ProjectInput class
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: Math.random().toString(),
-      title: title,
-      description: description,
-      people: numOfPeople
-    };
+    // Instantiate, thanks we have got now a constructor created
+    const newProject = new Project(
+      Math.random().toString(),
+      title,
+      description,
+      numOfPeople,
+      ProjectStatus.Active
+    );
     this.projects.push(newProject);
     for (const listenerFn of this.listeners) {
-      listenerFn(this.projects.slice());      // slice()    returns a copy, not the original one
+      listenerFn(this.projects.slice());
     }
   }
 }
 
-// Instance to manage the state, which it's the only one, since ProjectState follows singleton pattern
 const projectState = ProjectState.getInstance();
 
 // Validation
@@ -104,7 +124,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];    // Hold all the projects assigned in the list class
+  assignedProjects: Project[];    // Declare with the new  / class
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = document.getElementById(
@@ -120,9 +140,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement;
     this.element.id = `${this.type}-projects`;
 
-    // Create a listener, each time a project is added
-    // It's basically a function
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
@@ -131,13 +149,14 @@ class ProjectList {
     this.renderContent();
   }
 
-  // Render projects each time you listen that new project is added
   private renderProjects() {
-    const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+    const listEl = document.getElementById(
+      `${this.type}-projects-list`
+    )! as HTMLUListElement;
     for (const prjItem of this.assignedProjects) {
-      const listItem = document.createElement('li');    // Add li elements to the ul in 'project-list'
-      listItem.textContent = prjItem.title;
-      listEl.appendChild(listItem)    // Append items to the list
+      const listItem = document.createElement('li');
+      listItem.textContent = prjItem.title;     // We get error in code time, because we use instance of objects
+      listEl.appendChild(listItem);
     }
   }
 
@@ -234,9 +253,6 @@ class ProjectInput {
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
       const [title, desc, people] = userInput;
-      // Add projects inserted by the customer via ProjectInput --> ProjectList
-      // 1) Add directly to the ProjectList
-      // 2) Via ProjectState class
       projectState.addProject(title, desc, people);
       this.clearInputs();
     }
